@@ -1,0 +1,58 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a workshop · ILP</title><meta name="description" content="Book an ILP workshop, placement-readiness training or internships for your college."><link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2321295C'/%3E%3Ctext x='32' y='42' font-size='26' font-family='Arial' font-weight='700' fill='%23F2A104' text-anchor='middle'%3EKW%3C/text%3E%3C/svg%3E"></head><body>
+<header><div class="wrap nav"><a class="logo" href="index.html"><span class="mk">KW</span><span>Rajeev Kumar's Knowledge World<small>ILP · Gati Academy</small></span></a>
+<button class="menu" aria-label="Menu" onclick="document.querySelector('.links').classList.toggle('open')">☰</button>
+<nav class="links"><a href="index.html">Home</a><a href="ilp.html">ILP</a><a href="gati.html">Gati Academy</a><a href="about.html">About</a><a class="btn" href="colleges.html">Book a workshop</a></nav></div></header>
+<section class="hero"><div class="wrap"><div class="eyebrow">For colleges</div>
+<h1>Book a workshop for your students</h1>
+<p>Tell us about your college and what you need. We'll reply by email with a plan and dates.</p></div></section>
+
+<section class="blk"><div class="wrap grid g2" style="align-items:start">
+<div class="card">
+<form id="bf" onsubmit="return false">
+<div class="q"><label class="t">College name <span class="req">*</span></label><input type="text" id="college" maxlength="150"></div>
+<div class="q"><label class="t">City / town <span class="req">*</span></label><input type="text" id="city" maxlength="80"></div>
+<div class="q"><label class="t">Your name <span class="req">*</span></label><input type="text" id="contact" maxlength="100"></div>
+<div class="q"><label class="t">Your role</label><select id="role"><option value="">Choose…</option><option>Training &amp; Placement Officer</option><option>Principal</option><option>Head of Department</option><option>Faculty</option><option>Other</option></select></div>
+<div class="q"><label class="t">Official email <span class="req">*</span></label><input type="email" id="email" maxlength="120"></div>
+<div class="q"><label class="t">Phone <span style="color:var(--soft);font-weight:400">(optional)</span></label><input type="tel" id="phone" maxlength="20"></div>
+<div class="q"><label class="t">What do you need? <span class="req">*</span></label><div id="need"></div></div>
+<div class="q"><label class="t">Number of students (approx.)</label><input type="number" id="students" min="1" max="5000"></div>
+<div class="q"><label class="t">Branches / year</label><input type="text" id="branches" maxlength="150" placeholder="e.g. CSE, IT – 3rd year"></div>
+<div class="q"><label class="t">Preferred month</label><input type="text" id="month" maxlength="60" placeholder="e.g. January 2027"></div>
+<div class="q"><label class="t">Anything else?</label><textarea id="message" maxlength="1500"></textarea></div>
+<input type="text" id="website" style="display:none" tabindex="-1" autocomplete="off">
+<div id="err" class="err"></div><button class="btn dark" id="send">Send request</button>
+</form>
+<div id="done" class="ok hide">✅ Thank you! Your request has reached us. We'll reply to your email soon.</div>
+</div>
+<div>
+<div class="card top" style="margin-bottom:18px"><h3>What happens next</h3><p>1. We read your request and reply by email.<br>2. A short call to understand your students and labs.<br>3. A clear plan, topics and dates for your college.</p></div>
+<div class="card amber" style="margin-bottom:18px"><h3>What we need from the college</h3><p>Computer lab(s) with internet, a projector, and one faculty coordinator. We share a laptop setup guide in advance.</p></div>
+<div class="card navy"><h3>Prefer email?</h3><p>Write to <a href="mailto:training@grkkw.in">training@grkkw.in</a></p></div>
+</div>
+</div></section>
+<script>
+var API="https://script.google.com/macros/s/AKfycbymDI50T5zCIYdEtwbAW3oaHLtmL-b_WIbdEqTvm_QH1tvbTLLxRcUaMxkLCcBXbFy1/exec";
+["3-day hands-on workshop","Placement-readiness training (aptitude, communication, interviews)","Career guidance session","Internships for students"].forEach(function(v){var l=document.createElement("label");l.className="opt";l.innerHTML='<input type="checkbox" name="need" value="'+v+'">'+v;document.getElementById("need").appendChild(l)});
+function $(i){return document.getElementById(i)}
+$("send").onclick=function(){var b=this;$("err").textContent="";
+ var need=[].slice.call(document.querySelectorAll("input[name=need]:checked")).map(function(i){return i.value});
+ var p={college:$("college").value.trim(),city:$("city").value.trim(),contact:$("contact").value.trim(),role:$("role").value,email:$("email").value.trim(),phone:$("phone").value.trim(),need:need,students:$("students").value,branches:$("branches").value.trim(),month:$("month").value.trim(),message:$("message").value.trim(),website:$("website").value};
+ var e=[];if(!p.college)e.push("College name");if(!p.city)e.push("City");if(!p.contact)e.push("Your name");if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(p.email))e.push("a valid email");if(!need.length)e.push("what you need");
+ if(e.length){$("err").textContent="Please fill: "+e.join(", ");return}
+ b.disabled=true;b.textContent="Sending…";
+ fetch(API,{method:"POST",body:JSON.stringify({action:"booking",p:p}),headers:{"Content-Type":"text/plain;charset=utf-8"},credentials:"omit",redirect:"follow"})
+ .then(function(x){return x.json()}).then(function(j){if(j.err)throw new Error(j.err);$("bf").className="hide";$("done").className="ok"})
+ .catch(function(err){$("err").textContent=(err&&err.message&&err.message.indexOf("fetch")<0)?err.message:"Network problem. Please try again, or email training@grkkw.in.";})
+ .finally(function(){b.disabled=false;b.textContent="Send request"})};
+</script>
+
+<footer><div class="wrap"><div class="fgrid">
+<div><h4>Rajeev Kumar's Knowledge World</h4><p>Practical, hands-on training that gets students ready for real work and real exams. Based in Tiruvuru, Andhra Pradesh.</p>
+<p>📧 <a href="mailto:training@grkkw.in">training@grkkw.in</a></p></div>
+<div><h4>Programs</h4><p><a href="ilp.html">ILP: industry readiness</a><br><a href="ilp.html#internships">Internships</a><br><a href="gati.html">Gati Academy</a></p></div>
+<div><h4>For colleges</h4><p><a href="colleges.html">Book a workshop</a><br><a href="ilp.html#workshop">How a workshop runs</a><br><a href="about.html">About us</a></p></div>
+</div><div class="legal">© 2026 Rajeev Kumar's Knowledge World (MSME registered). ILP – Initial Learning Program, in collaboration with Holpen Enterprises Private Limited.</div></div></footer>
+</body></html>
