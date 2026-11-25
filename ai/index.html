@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI, Prompt Engineering and Agentic AI · ILP</title>
+<meta name="description" content="AI basics, prompt engineering and agentic AI for engineering students. ILP – Rajeev Kumar's Knowledge World.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#21295C;--blue:#065A82;--teal:#1C7293;--amber:#F2A104;--bg:#F4F7F9;--ink:#1D2433;--soft:#4A5568;--card:#FBFCFD;--code:#14213D;--codetext:#E8EDF3;--line:#D6DEE6}
+body{font-family:'Rubik',Arial,sans-serif;color:var(--ink)}
+section{background:var(--bg);padding:128px;display:flex;flex-direction:column;gap:40px;color:var(--ink)}
+section.dark{background:var(--navy);color:var(--bg)}
+section.accent{background:var(--amber);color:var(--navy)}
+h1{font-size:120px;font-weight:700;line-height:1.05;color:var(--navy);margin:0}
+h2{font-size:72px;font-weight:700;line-height:1.1;color:var(--navy);margin:0}
+h3{font-size:44px;font-weight:500;line-height:1.15;color:var(--navy);margin:0}
+p{font-size:32px;line-height:1.4;margin:0}
+section.dark h1,section.dark h2,section.dark h3{color:var(--bg)}
+section.accent h1,section.accent h2,section.accent h3{color:var(--navy)}
+.eyebrow{font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--teal)}
+section.dark .eyebrow{color:var(--amber)}
+section.accent .eyebrow{color:var(--navy)}
+.lead{font-size:40px;line-height:1.35;color:var(--soft)}
+section.dark .lead{color:#BFD8D5}
+.small{font-size:26px;color:var(--soft)}
+section.dark .small{color:#BFD8D5}
+.head{display:flex;flex-direction:column;gap:12px}
+.row{display:flex;gap:32px;align-items:stretch}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px}
+.grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:28px}
+.card{background:var(--card);border:2px solid var(--line);border-top:10px solid var(--teal);border-radius:20px;padding:36px;display:flex;flex-direction:column;gap:14px}
+.card.amber{border-top-color:var(--amber)}
+.card.navy{border-top-color:var(--navy)}
+.card.blue{border-top-color:var(--blue)}
+.card .big{font-size:72px;font-weight:700;color:var(--teal);line-height:1}
+.card .txt{font-size:30px;line-height:1.35;color:var(--soft)}
+section.dark .card{background:#2B3470;border-color:#3A4585}
+section.dark .card h3{color:var(--bg)}
+section.dark .card .txt{color:#D5DEEA}
+.quote{font-size:72px;font-weight:700;line-height:1.2;color:var(--bg)}
+section.accent .quote{color:var(--navy)}
+.quote-by{font-size:32px;color:var(--amber);font-weight:500}
+.code{background:var(--code);border-radius:18px;padding:32px 40px;display:flex;flex-direction:column;gap:6px}
+.code .ln{font-family:'JetBrains Mono','Courier New',monospace;font-size:34px;line-height:1.45;color:var(--codetext);white-space:nowrap}
+.code .cm{font-family:'JetBrains Mono','Courier New',monospace;font-size:28px;line-height:1.45;color:#8FB3C9;white-space:nowrap}
+.code .out{font-family:'JetBrains Mono','Courier New',monospace;font-size:30px;line-height:1.45;color:#F2C46B;white-space:nowrap}
+.mono{font-family:'JetBrains Mono','Courier New',monospace}
+.pill{display:inline-block;font-size:26px;font-weight:700;padding:8px 22px;border-radius:40px;background:var(--teal);color:var(--bg);align-self:flex-start}
+.pill.amber{background:var(--amber);color:var(--navy)}
+.pill.navy{background:var(--navy);color:var(--bg)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.col{display:flex;flex-direction:column;gap:20px}
+table.t{width:100%;font-size:30px;color:var(--ink)}
+table.t tr.hd{background:var(--navy);color:var(--bg)}
+table.t td.mono{font-family:'JetBrains Mono','Courier New',monospace}
+.flow{display:flex;align-items:center;gap:20px}
+.box{background:var(--card);border:3px solid var(--teal);border-radius:18px;padding:28px 24px;display:flex;flex-direction:column;gap:8px;align-items:center;flex:1}
+.box .bt{font-size:32px;font-weight:700;color:var(--navy);text-align:center}
+.box .bs{font-size:24px;color:var(--soft);text-align:center;font-family:'JetBrains Mono','Courier New',monospace}
+.box.live{border-color:var(--amber);background:#FFF6E0}
+.arrow{width:56px;height:30px;background:var(--teal);flex:0 0 56px}
+.task{background:#FFF6E0;border:3px solid var(--amber);border-radius:20px;padding:32px 40px;display:flex;flex-direction:column;gap:14px}
+.task .tt{font-size:34px;font-weight:700;color:var(--navy)}
+ul.b{font-size:34px;line-height:1.45;color:var(--ink);margin:0;padding-left:44px}
+ul.b li{margin:0 0 10px}
+section.dark ul.b{color:var(--bg)}
+.person{display:flex;flex-direction:column;gap:10px}
+.person .nm{font-size:40px;font-weight:700;color:var(--navy);line-height:1.15}
+.person .rl{font-size:28px;color:var(--soft);line-height:1.35}
+.tagrow{display:flex;gap:18px;flex-wrap:wrap}
+.tagrow p{font-size:30px;font-weight:700;padding:10px 26px;border-radius:40px;background:#2B3470;color:var(--bg)}
+.tagrow p.hot{background:var(--amber);color:var(--navy)}
+.step{background:var(--card);border-radius:20px;padding:32px;display:flex;flex-direction:column;gap:12px;border:2px solid var(--line)}
+.step .n{font-size:64px;font-weight:700;color:var(--amber);line-height:1}
+.step h3{font-size:40px}
+.step .txt{font-size:28px;color:var(--soft);line-height:1.35}
+.fade-in{animation:rise 600ms ease-out both}
+.d1{animation-delay:120ms}.d2{animation-delay:240ms}.d3{animation-delay:360ms}.d4{animation-delay:480ms}.d5{animation-delay:600ms}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.spacer{flex:1}
+.foot{font-size:24px;color:var(--soft)}
+section.dark .foot{color:#BFD8D5}
+.code.sm .ln,.code.sm .out,.code.sm .cm{font-size:28px}
+.code.xs{gap:2px}
+.code.xs .ln,.code.xs .out{font-size:26px;line-height:1.3}
+.pill.py{background:var(--blue);color:var(--bg)}
+.pill.js{background:var(--amber);color:var(--navy)}
+.syntax{background:#E7EDF3;border:3px dashed #8FA3B8;border-radius:18px;padding:28px 36px;display:flex;flex-direction:column;gap:4px}
+.syntax .ln{font-family:'JetBrains Mono','Courier New',monospace;font-size:32px;line-height:1.45;color:var(--ink);white-space:nowrap}
+.syntax .cm{font-family:'JetBrains Mono','Courier New',monospace;font-size:26px;line-height:1.45;color:#5B7083;white-space:nowrap}
+.syntax.sm .ln{font-size:28px}
+.ph{color:#B26A00;font-style:italic}
+.code .ph{color:#F2C46B}
+.lbl{font-size:26px;font-weight:700;color:var(--teal);letter-spacing:2px;text-transform:uppercase}
+.rules{display:flex;flex-direction:column;gap:10px}
+.rules p{font-size:30px;line-height:1.35;color:var(--ink)}
+.rules p b{color:var(--blue)}
+.mist{background:#FDECEA;border:3px solid #D9534F;border-radius:18px;padding:24px 32px;display:flex;flex-direction:column;gap:8px}
+.mist .tt{font-size:30px;font-weight:700;color:#A5281B}
+.mist p{font-size:28px;line-height:1.35}
+.qa{display:flex;flex-direction:column;gap:18px}
+.qa .q{font-size:34px;font-weight:700;color:var(--navy);line-height:1.3}
+.qa .a{font-size:28px;color:var(--soft);line-height:1.35;margin-top:-10px}
+ol.qs{font-size:36px;line-height:1.45;color:var(--ink);margin:0;padding-left:56px}
+ol.qs li{margin:0 0 14px}
+table.t{border-collapse:collapse}
+table.t th{background:var(--navy);color:var(--bg);text-align:left;padding:14px 20px;font-size:28px}
+table.t td{padding:12px 20px;border-bottom:2px solid var(--line);font-size:28px;vertical-align:top}
+table.t.lg th,table.t.lg td{font-size:32px}
+table.t td.mono{font-size:26px}
+.note{font-size:28px;color:var(--soft);line-height:1.35}
+.big-num{font-size:150px;font-weight:700;color:var(--amber);line-height:1}
+.chip{display:inline-block;font-size:24px;font-weight:700;padding:6px 18px;border-radius:30px;background:#E7EDF3;color:var(--navy)}
+.syntax.xs .ln{font-size:26px}
+.syntax.xs .cm{font-size:24px}
+
+/* ---- web player ---- */
+html,body{margin:0;height:100%;background:#0f1530;overflow:hidden}
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#deck{width:1920px;height:1080px;position:relative;transform-origin:center center;flex:none}
+.slide{position:absolute;inset:0;width:1920px;height:1080px;box-sizing:border-box;overflow:hidden;display:none!important}
+.slide.on{display:flex!important}
+x-shape{display:block}
+x-shape[kind="arrow-right"]{clip-path:polygon(0 30%,60% 30%,60% 0,100% 50%,60% 100%,60% 70%,0 70%)}
+#bar{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;gap:12px;padding:8px 14px;background:rgba(15,21,48,.85);color:#E8EDF3;font:500 14px Rubik,Arial,sans-serif;z-index:5;transition:opacity .3s}
+#bar button{background:#1C7293;color:#fff;border:0;border-radius:6px;padding:7px 14px;font:inherit;cursor:pointer}
+#bar button:hover{background:#065A82}
+#bar .sp{flex:1}
+#prog{position:fixed;left:0;top:0;height:4px;background:#F2A104;z-index:6;transition:width .3s}
+body.idle #bar{opacity:0}
+@media print{html,body{overflow:visible;background:#fff}#bar,#prog{display:none}#stage{position:static;display:block}#deck{transform:none!important;width:auto;height:auto}.slide{position:relative;display:flex!important;page-break-after:always}@page{size:1920px 1080px;margin:0}}
+</style></head>
+<body>
+<div id="prog"></div>
+<div id="stage"><div id="deck">
+<section id="cover" class="slide dark">
+<p class="eyebrow">ILP · Bonus session</p><div class="spacer"></div><h1 class="fade-in">AI, Prompt Engineering and Agentic AI</h1><p class="lead fade-in d2">What AI really is · how to talk to it · how AI agents do work for you</p><div class="spacer"></div><p class="foot">ILP – Initial Learning Program · Rajeev Kumar's Knowledge World</p>
+
+</section>
+<section id="why" class="slide dark">
+<p class="eyebrow">Why this matters</p><div class="spacer"></div><p class="quote fade-in">AI will not take your job. A person who uses AI well might.</p><p class="lead fade-in d2">Companies now expect freshers to use AI tools to learn faster, code faster and solve problems faster.</p><div class="spacer"></div>
+
+</section>
+<section class="slide" id="agenda">
+<div class="head"><p class="eyebrow">Today</p><h2>What we will cover</h2></div><table class="t lg"><tr><th>#</th><th>Topic</th></tr><tr><td>1</td><td>AI, ML, Deep Learning, GenAI and LLMs: what is what</td></tr><tr><td>2</td><td>How an LLM actually works (in simple words)</td></tr><tr><td>3</td><td>Prompt engineering: the 6-part prompt</td></tr><tr><td>4</td><td>Prompt techniques with real examples</td></tr><tr><td>5</td><td>Agentic AI: from chatbot to an agent that does work</td></tr><tr><td>6</td><td>Using AI safely and honestly</td></tr><tr><td>7</td><td>Hands-on practice · interview questions</td></tr></table>
+
+</section>
+<section id="d1" class="slide accent">
+<p class="eyebrow">Part 1</p><div class="spacer"></div><h1 class="fade-in" style="font-size:104px">What is AI?</h1><p class="lead fade-in d2">Clearing up the words everyone uses</p><div class="spacer"></div>
+
+</section>
+<section class="slide" id="tree">
+<div class="head"><p class="eyebrow">The family tree</p><h2>Each one is inside the one before it</h2></div><div class="flow"><div class="box fade-in d1"><p class="bt">AI</p><p class="bs">machines doing smart tasks</p></div><x-shape kind="arrow-right" class="arrow" style="background:#1C7293"></x-shape><div class="box fade-in d2"><p class="bt">Machine Learning</p><p class="bs">learns patterns from data</p></div><x-shape kind="arrow-right" class="arrow" style="background:#1C7293"></x-shape><div class="box fade-in d3"><p class="bt">Deep Learning</p><p class="bs">neural networks with many layers</p></div><x-shape kind="arrow-right" class="arrow" style="background:#1C7293"></x-shape><div class="box live fade-in d4"><p class="bt">Generative AI</p><p class="bs">creates text, images, code</p></div></div><p class="lead"><b>LLM</b> (Large Language Model) = Generative AI trained on huge amounts of text. ChatGPT, Gemini, Claude and Llama are LLMs.</p>
+
+</section>
+<section class="slide" id="examples">
+<div class="head"><p class="eyebrow">You already use AI</p><h2>AI is everywhere around you</h2></div><table class="t"><tr><th>Where</th><th>What the AI does</th><th>Type</th></tr><tr><td>YouTube / Instagram</td><td>Picks the next video for you</td><td>Machine Learning</td></tr><tr><td>Google Maps</td><td>Predicts traffic and travel time</td><td>Machine Learning</td></tr><tr><td>Phone camera</td><td>Finds faces, blurs background</td><td>Deep Learning</td></tr><tr><td>Gmail</td><td>Moves spam out, suggests replies</td><td>ML + GenAI</td></tr><tr><td>ChatGPT / Gemini / Claude</td><td>Writes, explains, codes</td><td>Generative AI (LLM)</td></tr><tr><td>GitHub Copilot</td><td>Writes code as you type</td><td>Generative AI (LLM)</td></tr></table>
+
+</section>
+<section class="slide" id="llm">
+<div class="head"><p class="eyebrow">How an LLM works</p><h2>It predicts the next word, again and again</h2></div><div class="flow"><div class="box fade-in d1"><p class="bt">Your prompt</p><p class="bs">"Python is a ..."</p></div><x-shape kind="arrow-right" class="arrow" style="background:#1C7293"></x-shape><div class="box fade-in d2"><p class="bt">Tokens</p><p class="bs">text split into small pieces</p></div><x-shape kind="arrow-right" class="arrow" style="background:#1C7293"></x-shape><div class="box fade-in d3"><p class="bt">Model</p><p class="bs">billions of learned numbers</p></div><x-shape kind="arrow-right" class="arrow" style="background:#1C7293"></x-shape><div class="box live fade-in d4"><p class="bt">Next token</p><p class="bs">"programming" → "language" ...</p></div></div><p class="lead">A <b>token</b> is a piece of a word (about ¾ of a word in English). The model reads and writes tokens, one at a time.</p>
+
+</section>
+<section class="slide" id="limits">
+<div class="head"><p class="eyebrow">Know the limits</p><h2>What LLMs are bad at</h2></div><div class="grid4"><div class="card fade-in d1"><h3>Hallucination</h3><p class="txt">It can say wrong things very confidently, even fake facts, fake links and fake functions.</p></div><div class="card navy fade-in d2"><h3>Old knowledge</h3><p class="txt">It only knows what was in its training data, unless it can search the web.</p></div><div class="card blue fade-in d3"><h3>No real memory</h3><p class="txt">Each chat starts fresh unless the tool saves memory for you.</p></div><div class="card amber fade-in d4"><h3>Maths and counting</h3><p class="txt">It predicts words, so long calculations can go wrong. Ask it to use code.</p></div></div>
+
+</section>
+<section id="d2" class="slide accent">
+<p class="eyebrow">Part 2</p><div class="spacer"></div><h1 class="fade-in" style="font-size:104px">Prompt Engineering</h1><p class="lead fade-in d2">How to ask so you get what you need</p><div class="spacer"></div>
+
+</section>
+<section id="gigo" class="slide dark">
+<p class="eyebrow">The golden rule</p><div class="spacer"></div><p class="quote fade-in">Vague prompt in, vague answer out.</p><p class="lead fade-in d2">Prompt engineering = writing clear instructions so the AI gives you exactly what you need.</p><div class="spacer"></div>
+
+</section>
+<section class="slide" id="six">
+<div class="head"><p class="eyebrow">The 6-part prompt</p><h2>A good prompt has these parts</h2></div><div class="grid3"><div class="card fade-in d1"><h3>1 · Role</h3><p class="txt">Who should the AI act as? "You are a senior Python developer."</p></div><div class="card navy fade-in d2"><h3>2 · Task</h3><p class="txt">What exactly do you want? "Explain this error."</p></div><div class="card blue fade-in d3"><h3>3 · Context</h3><p class="txt">Background it needs: your level, your code, your goal.</p></div><div class="card amber fade-in d4"><h3>4 · Format</h3><p class="txt">How the answer should look: steps, table, code only, 5 bullets.</p></div><div class="card fade-in d5"><h3>5 · Examples</h3><p class="txt">Show one sample of what good output looks like.</p></div><div class="card navy fade-in d5"><h3>6 · Constraints</h3><p class="txt">Limits: "under 100 words", "no libraries", "beginner words".</p></div></div>
+
+</section>
+<section class="slide" id="badgood">
+<div class="head"><p class="eyebrow">Bad vs good</p><h2>Same question, two prompts</h2></div><div class="grid2"><div class="col"><p class="lbl">❌ Bad</p><div class="code"><p class="ln">fix my code</p></div></div><div class="col"><p class="lbl">✅ Good</p><div class="code sm"><p class="ln">You are a Python teacher.</p><p class="ln">My Flask withdraw route lets the balance</p><p class="ln">go below zero. Here is the code:</p><p class="ln"><span class="ph">paste code</span></p><p class="ln">1. Find the bug.</p><p class="ln">2. Show the fixed code.</p><p class="ln">3. Explain the fix in 3 simple lines.</p></div></div></div><p class="lead">The good prompt has <b>role, context, task and format</b>. It takes 30 seconds more and saves 10 minutes.</p>
+
+</section>
+<section class="slide" id="tech">
+<div class="head"><p class="eyebrow">Techniques</p><h2>5 prompt techniques you should know</h2></div><table class="t"><tr><th>Technique</th><th>What it means</th><th>Try it</th></tr><tr><td>Zero-shot</td><td>Just ask, no examples</td><td>Explain REST API in 3 lines</td></tr><tr><td>Few-shot</td><td>Give 2–3 examples first</td><td>Here are 2 good commit messages. Write one for my change.</td></tr><tr><td>Step by step</td><td>Ask it to reason in steps</td><td>Solve this aptitude question step by step</td></tr><tr><td>Role prompting</td><td>Give it a role</td><td>Act as an HR interviewer and interview me</td></tr><tr><td>Iterate</td><td>Improve the answer in follow-ups</td><td>Shorter. Simpler words. Add an example.</td></tr></table>
+
+</section>
+<section class="slide" id="fewshot">
+<div class="head"><p class="eyebrow">Few-shot example</p><h2>Teach by showing</h2></div><div class="code xs"><p class="ln">Convert the task into a git commit message.</p><p class="ln">&#160;</p><p class="ln">Task: added login page with email and password</p><p class="ln">Commit: Add login page with email/password form</p><p class="ln">&#160;</p><p class="ln">Task: fixed bug where balance went negative</p><p class="ln">Commit: Fix withdraw allowing negative balance</p><p class="ln">&#160;</p><p class="ln">Task: added 4 percent interest button to bank page</p><p class="ln">Commit:</p></div><p class="lead">Two examples teach the <b>pattern</b>. The AI fills in the last line in the same style.</p>
+
+</section>
+<section class="slide" id="student">
+<div class="head"><p class="eyebrow">Prompts for students</p><h2>Use AI to learn, not to skip learning</h2></div><div class="grid2"><div class="card fade-in d1"><h3>Learn a concept</h3><p class="txt">Explain SQL JOIN like I am a beginner, with a small student-marks example. Then give me 3 practice questions.</p></div><div class="card navy fade-in d2"><h3>Understand an error</h3><p class="txt">I got this error in Spring Boot: «error». Explain what it means and the 3 most likely causes.</p></div><div class="card blue fade-in d3"><h3>Interview practice</h3><p class="txt">Act as an interviewer for a fresher Python role. Ask me one question at a time and rate my answer.</p></div><div class="card amber fade-in d4"><h3>Resume help</h3><p class="txt">Here is my project: «details». Write 2 resume bullet points with action verbs. Don't add anything I didn't do.</p></div></div>
+
+</section>
+<section class="slide" id="pmistakes">
+<div class="head"><p class="eyebrow">Common mistakes</p><h2>Prompt mistakes to avoid</h2></div><table class="t"><tr><th>You see</th><th>Fix</th></tr><tr><td class="mono">"write code for bank app"</td><td>Say the language, features, and what you already have</td></tr><tr><td class="mono">Pasting 500 lines with no question</td><td>Paste only the part that matters + say what is wrong</td></tr><tr><td class="mono">Accepting the first answer</td><td>Ask follow-ups: simpler, shorter, add tests, explain line 5</td></tr><tr><td class="mono">Trusting it blindly</td><td>Run the code. Check facts. Ask "are you sure? show a source"</td></tr><tr><td class="mono">Pasting passwords or API keys</td><td>Never share .env, keys, passwords or personal data</td></tr></table>
+
+</section>
+<section id="d3" class="slide accent">
+<p class="eyebrow">Part 3</p><div class="spacer"></div><h1 class="fade-in" style="font-size:104px">Agentic AI</h1><p class="lead fade-in d2">From AI that talks to AI that does work</p><div class="spacer"></div>
+
+</section>
+<section class="slide" id="chatvsagent">
+<div class="head"><p class="eyebrow">The difference</p><h2>Chatbot vs AI agent</h2></div><table class="t lg"><tr><th></th><th>Chatbot</th><th>AI agent</th></tr><tr><td>What it does</td><td>Answers your question</td><td>Completes a goal for you</td></tr><tr><td>Steps</td><td>One reply</td><td>Many steps, one after another</td></tr><tr><td>Tools</td><td>Usually none</td><td>Uses tools: web search, code, files, APIs</td></tr><tr><td>Decisions</td><td>You decide what's next</td><td>It decides the next step itself</td></tr><tr><td>Example</td><td>"How do I book a train ticket?"</td><td>Searches trains, compares, fills the form, asks you before paying</td></tr></table>
+
+</section>
+<section class="slide" id="loop">
+<div class="head"><p class="eyebrow">How an agent works</p><h2>The agent loop</h2></div><div class="flow"><div class="box fade-in d1"><p class="bt">Goal</p><p class="bs">what the user wants</p></div><x-shape kind="arrow-right" class="arrow" style="background:#1C7293"></x-shape><div class="box fade-in d2"><p class="bt">Think / Plan</p><p class="bs">decide the next step</p></div><x-shape kind="arrow-right" class="arrow" style="background:#1C7293"></x-shape><div class="box fade-in d3"><p class="bt">Act</p><p class="bs">use a tool</p></div><x-shape kind="arrow-right" class="arrow" style="background:#1C7293"></x-shape><div class="box live fade-in d4"><p class="bt">Observe</p><p class="bs">check the result</p></div></div><p class="lead">It <b>repeats</b> Think → Act → Observe until the goal is done, or it stops to ask you.</p>
+
+</section>
+<section class="slide" id="parts">
+<div class="head"><p class="eyebrow">Inside an agent</p><h2>4 building blocks of every AI agent</h2></div><div class="grid4"><div class="card fade-in d1"><h3>Brain · LLM</h3><p class="txt">Understands the goal and decides what to do next.</p></div><div class="card navy fade-in d2"><h3>Tools</h3><p class="txt">Functions it can call: search, run code, read files, call APIs, send email.</p></div><div class="card blue fade-in d3"><h3>Memory</h3><p class="txt">Remembers earlier steps and useful facts.</p></div><div class="card amber fade-in d4"><h3>Guardrails</h3><p class="txt">Rules and limits: what it may do alone, and when it must ask a human.</p></div></div>
+
+</section>
+<section class="slide" id="bankagent">
+<div class="head"><p class="eyebrow">Connect it to your project</p><h2>Your Bank API can be an agent's tool</h2></div><div class="code xs"><p class="ln">User:&#160;&#160;"Withdraw 500 and email me the new balance"</p><p class="ln">&#160;</p><p class="ln">Agent thinks: I need the withdraw tool.</p><p class="ln">Agent acts:&#160;&#160; POST /api/withdraw&#160;&#160;{"amount": 500}</p><p class="ln">Observes:&#160;&#160;&#160;&#160; {"balance": 9500}</p><p class="ln">&#160;</p><p class="ln">Agent thinks: now send the email.</p><p class="ln">Agent acts:&#160;&#160; send_email(to, "New balance: Rs 9500")</p><p class="ln">Observes:&#160;&#160;&#160;&#160; email sent</p><p class="ln">&#160;</p><p class="ln">Agent:&#160;&#160;"Done. Rs 500 withdrawn. Balance Rs 9500. Email sent."</p></div><p class="lead">Agents don't replace APIs. <b>Agents use APIs.</b> The backend you built this week is exactly what agents need.</p>
+
+</section>
+<section class="slide" id="agentex">
+<div class="head"><p class="eyebrow">Agents in real life</p><h2>Where agents are used today</h2></div><table class="t"><tr><th>Area</th><th>What the agent does</th></tr><tr><td>Coding</td><td>Reads your project, writes code, runs tests, fixes errors (Copilot, Claude Code, Cursor)</td></tr><tr><td>Customer support</td><td>Checks your order, processes a refund, escalates to a human</td></tr><tr><td>Research</td><td>Searches many websites, reads them and writes a report</td></tr><tr><td>DevOps</td><td>Watches servers, finds the cause of an error, suggests a fix</td></tr><tr><td>Personal</td><td>Reads email, books meetings, fills forms (asks before sending)</td></tr></table>
+
+</section>
+<section class="slide" id="roles">
+<div class="head"><p class="eyebrow">Careers</p><h2>New skills companies are looking for</h2></div><div class="grid4"><div class="card fade-in d1"><h3>AI-assisted developer</h3><p class="txt">Uses AI to code faster but understands and checks every line.</p></div><div class="card navy fade-in d2"><h3>Prompt / AI workflow</h3><p class="txt">Designs prompts and multi-step AI workflows for a business task.</p></div><div class="card blue fade-in d3"><h3>AI agent developer</h3><p class="txt">Builds agents with tools, APIs and guardrails (Python is the top language here).</p></div><div class="card amber fade-in d4"><h3>Strong basics</h3><p class="txt">Python or Java, SQL, APIs, Git. Every AI role still needs these.</p></div></div>
+
+</section>
+<section class="slide" id="rules">
+<div class="head"><p class="eyebrow">Use AI the right way</p><h2>5 rules for using AI</h2></div><div class="grid3"><div class="card fade-in d1"><h3>Understand it</h3><p class="txt">Never submit code you can't explain. Interviewers will ask you to explain it.</p></div><div class="card navy fade-in d2"><h3>Verify it</h3><p class="txt">Run the code, test it, check facts from a real source.</p></div><div class="card blue fade-in d3"><h3>Protect data</h3><p class="txt">No passwords, API keys, .env files or personal data in prompts.</p></div><div class="card amber fade-in d4"><h3>Be honest</h3><p class="txt">Follow your college rules. Don't present AI work as yours in exams.</p></div><div class="card fade-in d5"><h3>Stay in charge</h3><p class="txt">AI suggests; you decide. Especially before sending, paying or deleting.</p></div></div>
+
+</section>
+<section class="slide" id="practice">
+<div class="head"><p class="eyebrow">Type this now · 10 minutes</p><h2>Write a better prompt</h2></div><div class="task"><p class="tt">Your task</p><ul class="b"><li>Start with this bad prompt: <b>"explain API"</b></li><li>Rewrite it using the 6 parts: role, task, context, format, examples, constraints</li><li>Try both prompts in ChatGPT, Gemini or Claude and compare the answers</li><li>Bonus: ask it to quiz you with 3 questions on APIs, one at a time</li></ul></div><p class="note">Hint: mention your level (3rd-year CSE), your project (Flask/Express/Spring Boot bank app) and the format you want.</p><p class="lead">Try it first. The answer is on the next slide.</p>
+
+</section>
+<section class="slide" id="practice-ans">
+<div class="head"><p class="eyebrow">One good answer</p><h2>A strong version of the prompt</h2></div><div class="code sm"><p class="ln">You are a friendly backend developer teaching a 3rd-year CSE student.</p><p class="ln">&#160;</p><p class="ln">Explain what an API is, using my Bank app as the example:</p><p class="ln">it has POST /api/deposit and POST /api/withdraw.</p><p class="ln">&#160;</p><p class="ln">Format:</p><p class="ln">1. A one-line definition</p><p class="ln">2. A real-life comparison (like a restaurant waiter)</p><p class="ln">3. What happens step by step when I call /api/withdraw</p><p class="ln">&#160;</p><p class="ln">Use simple English. Under 150 words.</p></div>
+
+</section>
+<section class="slide" id="iq">
+<div class="head"><p class="eyebrow">Interview corner · asked in real interviews</p><h2>AI questions asked in fresher interviews</h2></div><ol class="qs"><li>What is the difference between AI, ML and Deep Learning?</li><li>What is an LLM?</li><li>What is hallucination?</li><li>What is prompt engineering?</li><li>What is an AI agent?</li></ol><p class="note">Discuss with your partner for 2 minutes. Answers on the next slide.</p>
+
+</section>
+<section class="slide" id="iq-ans">
+<div class="head"><p class="eyebrow">Interview corner · answers</p><h2>AI questions asked in fresher interviews</h2></div><div class="qa"><p class="q">1. What is the difference between AI, ML and Deep Learning?</p><p class="a">AI is any machine doing smart tasks. ML is AI that learns from data. Deep learning is ML using many-layer neural networks.</p><p class="q">2. What is an LLM?</p><p class="a">A Large Language Model: a deep learning model trained on huge text data that predicts the next token to generate text, like ChatGPT or Gemini.</p><p class="q">3. What is hallucination?</p><p class="a">When an AI gives wrong or made-up information confidently. That's why we always verify its output.</p><p class="q">4. What is prompt engineering?</p><p class="a">Writing clear instructions (role, task, context, format) so the AI gives the exact output we need.</p><p class="q">5. What is an AI agent?</p><p class="a">An AI system that works toward a goal in steps, using tools like APIs or code, and checking results until the task is done.</p></div>
+
+</section>
+<section id="close" class="slide dark">
+<p class="eyebrow">Remember</p><div class="spacer"></div><p class="quote fade-in">Learn the basics. Use AI to go faster. Always understand what you ship.</p><p class="lead fade-in d2">Your Python, Java, SQL, API and Git skills are what make AI useful in your hands.</p><div class="spacer"></div>
+
+</section>
+
+</div></div>
+<div id="bar">
+<button id="prev" aria-label="Previous slide">◀ Prev</button>
+<button id="next" aria-label="Next slide">Next ▶</button>
+<span id="count"></span><span class="sp"></span>
+<span>ILP · Rajeev Kumar's Knowledge World · <a href="https://grkkw.in" style="color:#F2A104">grkkw.in</a></span>
+<button id="fs" aria-label="Full screen">⛶ Full screen</button>
+</div>
+<script>
+(function(){
+  var s=[].slice.call(document.querySelectorAll('.slide')),deck=document.getElementById('deck'),i=0;
+  function fit(){var k=Math.min(innerWidth/1920,innerHeight/1080);deck.style.transform='scale('+k+')';}
+  function show(n){
+    i=Math.max(0,Math.min(s.length-1,n));
+    s.forEach(function(x,j){x.classList.toggle('on',j===i);});
+    document.getElementById('count').textContent=(i+1)+' / '+s.length;
+    document.getElementById('prog').style.width=((i+1)/s.length*100)+'%';
+    if(location.hash!=='#'+(i+1))history.replaceState(null,'','#'+(i+1));
+  }
+  addEventListener('resize',fit);fit();
+  document.getElementById('prev').onclick=function(){show(i-1)};
+  document.getElementById('next').onclick=function(){show(i+1)};
+  document.getElementById('fs').onclick=function(){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()};
+  addEventListener('keydown',function(e){
+    if(['ArrowRight','PageDown',' ','Enter'].indexOf(e.key)>=0){e.preventDefault();show(i+1)}
+    else if(['ArrowLeft','PageUp','Backspace'].indexOf(e.key)>=0){e.preventDefault();show(i-1)}
+    else if(e.key==='Home')show(0);else if(e.key==='End')show(s.length-1);
+    else if(e.key==='f'||e.key==='F')document.getElementById('fs').click();
+  });
+  var x0=null;addEventListener('touchstart',function(e){x0=e.touches[0].clientX});
+  addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)show(i+(dx<0?1:-1));x0=null});
+  var t;function wake(){document.body.classList.remove('idle');clearTimeout(t);t=setTimeout(function(){document.body.classList.add('idle')},2500)}
+  addEventListener('mousemove',wake);wake();
+  show((parseInt(location.hash.slice(1),10)||1)-1);
+})();
+</script>
+</body></html>
